@@ -1,13 +1,37 @@
 {
+  "name": "appointment-scheduler",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test-db": "ts-node --project tsconfig-node.json src/lib/test-db.ts",
+    "postinstall": "prisma generate"
+  },
   "dependencies": {
-    "@apollo/client": "^3.12.5",
-    "@auth/nextjs": "^0.0.0-380f8d56",
-    "@prisma/client": "^6.2.1",
-    "dayjs": "^1.11.13",
-    "graphql": "^16.10.0",
-    "graphql-yoga": "^5.10.9"
+    "@apollo/client": "^3.8.8",
+    "@graphql-tools/schema": "^10.0.0",
+    "@graphql-tools/utils": "^10.0.0",
+    "@prisma/client": "^5.7.1",
+    "dayjs": "^1.11.10",
+    "graphql": "^16.8.1",
+    "graphql-yoga": "^5.1.1",
+    "next": "14.0.4",
+    "next-auth": "^4.24.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "prisma": "^6.2.1"
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "prisma": "^5.7.1",
+    "tailwindcss": "^3.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }

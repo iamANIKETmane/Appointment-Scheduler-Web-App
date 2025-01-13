@@ -1,7 +1,30 @@
 'use client'
 import React, { useState } from 'react'
+import { gql, useMutation } from '@apollo/client'
+
+const CREATE_APPOINTMENT = gql`
+  mutation CreateAppointment(
+    $title: String!
+    $description: String
+    $startTime: String!
+    $endTime: String!
+  ) {
+    createAppointment(
+      title: $title
+      description: $description
+      startTime: $startTime
+      endTime: $endTime
+    ) {
+      id
+      title
+      startTime
+      endTime
+    }
+  }
+`
 
 export function AppointmentForm() {
+  const [createAppointment, { loading, error }] = useMutation(CREATE_APPOINTMENT)
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -12,8 +35,36 @@ export function AppointmentForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // TODO: Implement appointment creation logic
+    
+    try {
+      const startDateTime = new Date(`${formData.date}T${formData.startTime}:00`)
+      const endDateTime = new Date(`${formData.date}T${formData.endTime}:00`)
+      
+      await createAppointment({
+        variables: {
+          title: formData.title,
+          description: formData.description,
+          startTime: startDateTime.toISOString(),
+          endTime: endDateTime.toISOString(),
+        },
+      })
+      
+      // Reset form
+      setFormData({
+        title: '',
+        description: '',
+        date: '',
+        startTime: '',
+        endTime: '',
+      })
+      
+    } catch (err) {
+      console.error('Error creating appointment:', err)
+    }
   }
+
+  if (loading) return <div>Submitting...</div>
+  if (error) return <div>Error: {error.message}</div>
 
   return (
     <div className="bg-white rounded-lg shadow p-6">

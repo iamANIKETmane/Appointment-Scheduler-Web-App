@@ -1,7 +1,12 @@
-import { prisma } from '../lib/prisma'
+import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
+import type { Resolvers } from '@graphql-tools/utils'
 
-export const resolvers = {
+interface Context {
+  session: Awaited<ReturnType<typeof getServerSession>>
+}
+
+export const resolvers: Resolvers<Context> = {
   Query: {
     appointments: async () => {
       return prisma.appointment.findMany({
